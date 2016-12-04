@@ -2,7 +2,9 @@
 
 app.controller("camCtrl", function($scope,$rootScope,$location,db) {
 
-if($rootScope.inDark){
+
+
+if(db.inDark()){
   $location.path('/map');
 }
 
@@ -26,7 +28,7 @@ var processedSensorPixels;
 
 $scope.complete = false;
 $scope.finish = function(){
-  db.setDark();
+  db.lumensCaught();
   $scope.complete = true;
 
 }
