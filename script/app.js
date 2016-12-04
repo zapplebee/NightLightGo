@@ -66,7 +66,7 @@ document.addEventListener('touchmove', function(e){e.preventDefault()}, false);
         templateUrl: '/templates/cam.html',
         controller: 'camCtrl'
       }).when('/house', {
-        template: '<img class="softboys" src="{{src()}}">',
+        template: '<img class="softboys" src="{{src()}}"><label class="remaininglumens">Remaining Lumens: {{lumens}}</label>',
         controller: 'gCtrl'
       })
       // route for the about page
@@ -257,6 +257,10 @@ var ref = firebase.database().ref(Zuid);
 
 
 app.controller("gCtrl", function($scope,db) {
+
+  db._bind($scope,db.getLumens,'lumens');
+
+
 
   $scope.src = function(){
     var lumens = db.getLumens();
