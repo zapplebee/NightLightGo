@@ -145,4 +145,18 @@ body,html,.main {
   height: 80vh;
   background-color: white;
   z-index: 100000;
+  padding: 10vmin;
+  text-align:center;
+
+
 }
+
+.interact h1 {
+  font-size: 3em;
+}
+.interact p {
+  margin-top: 1em;
+  font-size 1.5em;
+}
+
+interact
