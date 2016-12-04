@@ -167,7 +167,7 @@ function advanceFrame(time){
 
     //console.log(captured);
 
-    if(captured.length < 1 || _.find(captured,function(dude){ return dude.animation !== 7})){
+    if(captured.length < 10 || _.find(captured,function(dude){ return dude.animation !== 7})){
       requestAnimationFrame(advanceFrame);
       
     }else {
