@@ -74,6 +74,10 @@ document.addEventListener('touchmove', function(e){e.preventDefault()}, false);
         templateUrl: '/templates/login.html',
         controller: 'loginCtrl'
       })
+      .when('/info', {
+        templateUrl: '/templates/info.html',
+        controller: 'infoCtrl'
+      })
       // route for the contact page
       .when('/map', {
         templateUrl: '/templates/map.html',

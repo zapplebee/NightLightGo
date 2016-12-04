@@ -163,3 +163,16 @@ body,html,.main {
   margin-top: 2em;
   font-size: 1.5em;
 }
+
+.directions {
+
+  padding: 10vmin;
+  padding-top: 15vh;
+  font-size: 1em;
+  line-height: 2em;
+}
+
+.directions p {
+  line-height: 1.5em;
+  margin-top: 2em;
+}
