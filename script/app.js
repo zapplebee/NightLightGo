@@ -48,7 +48,7 @@ var initlized = false;
       if (user && user.uid && !initlized) {
         //$rootScope.user = user;
         userGlobal = user;
-        angularStart('/map');
+        angularStart('/info');
 
       } else if (!initlized) {
         angularStart('/signin');
