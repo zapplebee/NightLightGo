@@ -10,6 +10,7 @@ $scope.signIn = function(){
 
 $scope.authObj.$signInWithEmailAndPassword($scope.username, $scope.password).then(function(firebaseUser) {
   console.log("Signed in as:", firebaseUser.uid);
+  $rootScope.user = firebaseUser;
   $location.path('/map');
 }).catch(function(error) {
   console.error("Authentication failed:", error);

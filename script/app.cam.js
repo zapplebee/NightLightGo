@@ -1,6 +1,11 @@
 
 
 app.controller("camCtrl", function($scope,$rootScope,$location,db) {
+
+if($rootScope.inDark){
+  $location.path('/map');
+}
+
 var streamHelper;
 var video = document.getElementById("video");
         $scope.$on("$locationChangeStart", function(event) {

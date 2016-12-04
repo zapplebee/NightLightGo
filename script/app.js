@@ -51,16 +51,11 @@ var initlized = false;
         angularStart('/map');
 
       } else if (!initlized) {
-
         angularStart('/signin');
 
       }
     });
-
-
-
-
-
+document.addEventListener('touchmove', function(e){e.preventDefault()}, false);
 
 
   var app = angular.module("nightlightgo", ['ngRoute', 'ngMap', 'firebase','ngTouch']);
@@ -144,7 +139,7 @@ app.service("db",function($rootScope,$firebaseAuth,$firebaseObject,$firebaseArra
   //https://github.com/firebase/angularfire/blob/master/docs/reference.md#bindtoscope-varname
 
 
-
+  //$rootScope.user = $rootScope.user || {uid:""};
 
 
   $rootScope.$watch('coords',function(coords){
