@@ -65,8 +65,8 @@ document.addEventListener('touchmove', function(e){e.preventDefault()}, false);
       .when('/cam', {
         templateUrl: '/templates/cam.html',
         controller: 'camCtrl'
-      }).when('/g', {
-        template: '<button ng-click="g()">g</button>',
+      }).when('/house', {
+        template: '<img class="softboys" src="{{src()}}">',
         controller: 'gCtrl'
       })
       // route for the about page
@@ -219,8 +219,7 @@ var ref = firebase.database().ref(Zuid);
     console.log('yaaaas');
     _.each(dzO,function(e,i,collection){
       if(!_.startsWith(i, '$')){
-        if(Math.abs(e.time - Date.now()) > 1800000){
-          //if darknesses are over half hour old, delete them.
+        if(Math.abs(e.time - Date.now()) > (1000 * 60 * 10 /* ten minutes*/)){
           $firebaseObject(ref.child('darkzones/'+i)).$remove();
         }
       }
@@ -243,7 +242,7 @@ var ref = firebase.database().ref(Zuid);
     
     });
   }
-  },(2000))
+  },(1000 * 60))
 
 
 
@@ -256,3 +255,17 @@ var ref = firebase.database().ref(Zuid);
 
 
 
+
+app.controller("gCtrl", function($scope,db) {
+
+  $scope.src = function(){
+    var lumens = db.getLumens();
+
+    if (lumens == 0){
+      return '/nolumens.gif';
+    }
+
+    
+  }
+
+});

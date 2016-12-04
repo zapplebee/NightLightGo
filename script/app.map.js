@@ -65,13 +65,3 @@ $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdvNmILq
   });
 
 });
-app.controller("gCtrl", function($scope,$rootScope) {
-
-    console.log($rootScope.user);
-    $scope.g = function(){
-    firebase.database().ref('users/' + $rootScope.user.uid).set({
-    childname: 'pz',
-    light: 100
-  }).then(function(){console.log('good',arguments)}).catch(function(){console.log(arguments)});
-}
-});
