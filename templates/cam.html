@@ -1,0 +1,12 @@
+<div>
+
+    <video id="video" autoplay="true" style="display:none;"></video>
+      <canvas id="video-canvas"></canvas>
+      <canvas id="game-canvas"></canvas>
+      <canvas id="sensor-canvas" ng-click="test($event)"></canvas>
+</div>
+
+<div class="interact" ng-show="complete">
+<h1>COMPLETE</h1>
+<p>You've captured enough lumens here, look for some more on the <a href="#/map">Map</a></p>
+</div>

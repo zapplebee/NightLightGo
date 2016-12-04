@@ -1,0 +1,27 @@
+<div id="map" map-lazy-load="https://maps.google.com/maps/api/js"
+  map-lazy-load-params="{{googleMapsUrl}}">
+  <ng-map center="{{location}}" zoom="18" disable-default-u-i="true">
+
+   <marker position="{{location}}" title="Hello World!"
+      optimized="false"
+      icon="{
+        url:'wizard.gif',
+        scaledSize:[96,96],
+        origin: [0,0],
+        anchor: [48,48]
+      }"></marker>
+
+
+         <shape ng-repeat="path in paths track by $index" name="polygon" 
+     paths="{{path}}"
+     stroke-color="#000000"
+     stroke-opacity="1"
+     stroke-weight="0"
+     fill-color="#000000"
+     fill-opacity=".2">
+
+
+
+  </ng-map>
+
+</div>

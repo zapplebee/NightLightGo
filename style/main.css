@@ -1,0 +1,148 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 1em;
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1em;
+
+}
+
+body,html,.main {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.main-nav {
+  background-color: rgb(203,203,203);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  z-index: 1000000;
+}
+
+
+
+.main-nav a{
+  display: inline-block;
+  text-align: center;
+  padding-top: .5em;
+  padding-bottom: .5em;
+  width: 25%;
+}
+
+.main-nav .active {
+  background-color: rgb(203,230,203);
+}
+
+.main-nav .disabled {
+  background-color: rgb(20,23,20);
+  pointer-events: none;
+}
+
+.modal {
+  height: 100%;
+  width: 100%;
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0,.6)
+}
+
+    #sign-up-in-modal{
+
+ background-color: #ffbb00;
+ padding: 4em;
+    }
+
+    #sign-up-in-modal * {
+      display:block;
+      text-align:center;
+      margin: auto;
+      margin-top: 0.5em;
+    }
+
+    .logo {
+      width: 10em;
+    }
+    #sign-up-in-modal h1{
+    font-family: 'Sigmar One', cursive;
+    font-size: 1.5em;
+    }
+
+        #sign-up-in-modal h1.go{
+    font-size: 2.5em;
+    margin-top: 0;
+    }
+
+.modal input {
+  padding: .25em;
+        border-radius: 1em;
+}
+
+
+
+
+    .modal button, #sign-up-in-modal button {
+      background-color: transparent;
+      color: black;
+      border: .175em black solid;
+      padding-left: .5em;
+      padding-right: .5em;
+      font-weight: bold;
+      font-size: 1em;
+      text-transform: uppercase;
+      border-radius: .5em;
+      display: inline-block;
+    }
+
+
+
+    .modal h2 {
+      font-weight: bold;
+      font-size: 1em;
+    }
+
+
+
+  #video-canvas,#game-canvas, #sensor-canvas {
+    position: absolute;
+    left: 0%;
+    top:0%;
+  }
+
+  #video-canvas {
+    transform: scale(-1,1);
+  }
+
+#sensor-canvas {
+  image-rendering: pixelated;
+  opacity: 0;
+}
+
+  #map, ng-map  {
+    height: 100%;
+    width: 100%;
+  }
+
+
+.max-overlay {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1000000;
+  font-size: 4em;
+}
+
+.interact {
+  position: absolute;
+  top: 10vh;
+  left: 10vw;
+  width: 80vw;
+  height: 80vh;
+  background-color: white;
+  z-index: 100000;
+}
