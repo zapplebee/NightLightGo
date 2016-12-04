@@ -265,6 +265,11 @@ app.controller("gCtrl", function($scope,db) {
       return '/nolumens.gif';
     }
 
+    if (lumens < 50){
+      return '/halflumens.gif'
+    }
+
+    return '/fulllumens.gif'
     
   }
 
