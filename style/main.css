@@ -176,3 +176,10 @@ body,html,.main {
   line-height: 1.5em;
   margin-top: 2em;
 }
+
+.softboys {
+  position:absoute;
+  width:100%;
+  bottom: 0;
+  left:0;
+}
