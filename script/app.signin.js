@@ -17,4 +17,21 @@ $scope.authObj.$signInWithEmailAndPassword($scope.username, $scope.password).the
 });
 }
 
+
+$scope.signUp = function(){
+
+firebase.auth().createUserWithEmailAndPassword($scope.username, $scope.password).then(function(){
+
+  $scope.signIn();
+
+
+}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // ...
+});
+
+}
+
 });
