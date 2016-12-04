@@ -8,9 +8,13 @@
   <h2>
   <h2>Password</h2>
   <input type="password" ng-model="password">
+  <pre ng-show="error" style="color: red">
+    {{error.message}}
+  </pre>
   <span>
   <button ng-click="signIn()">Log In</button>
   <button ng-click="signUp()">Sign Up</button>
+
   </span>
   </div>
 </div>

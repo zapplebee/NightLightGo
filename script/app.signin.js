@@ -14,6 +14,7 @@ $scope.authObj.$signInWithEmailAndPassword($scope.username, $scope.password).the
   db.init(firebaseUser.uid);
   $location.path('/map');
 }).catch(function(error) {
+  $scope.error = error;
   console.error("Authentication failed:", error);
 });
 }
@@ -29,6 +30,7 @@ $scope.authObj.$createUserWithEmailAndPassword($scope.username, $scope.password)
 }).catch(function(error) {
   console.log(error);
   // Handle Errors here.
+  $scope.error = error;
   var errorCode = error.code;
   var errorMessage = error.message;
   // ...
