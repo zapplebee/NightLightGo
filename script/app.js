@@ -172,12 +172,12 @@ app.service("db",function($rootScope,$firebaseAuth,$firebaseObject,$firebaseArra
         db = firebase.database().ref($rootScope.user.uid);
         darkzones = db.child('darkzones');
         lumens    = db.child('lumens');
+        dzO = $firebaseObject(darkzones);
 
   })
 
 
 
-  var dzO = $firebaseObject(darkzones);
 
 
 
