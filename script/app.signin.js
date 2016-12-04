@@ -20,7 +20,7 @@ $scope.authObj.$signInWithEmailAndPassword($scope.username, $scope.password).the
 
 $scope.signUp = function(){
 
-firebase.auth().createUserWithEmailAndPassword($scope.username, $scope.password).then(function(){
+$scope.authObj.$createUserWithEmailAndPassword($scope.username, $scope.password).then(function(){
 
   $scope.signIn();
 
