@@ -47,7 +47,6 @@ var initlized = false;
     firebase.auth().onAuthStateChanged(function(user) {
       if (user && user.uid && !initlized) {
         //$rootScope.user = user;
-        console.log(user);
         userGlobal = user;
         angularStart('/map');
 
@@ -166,11 +165,17 @@ app.service("db",function($rootScope,$firebaseAuth,$firebaseObject,$firebaseArra
   })
 
 
+  var db, darkzones, lumens,dzO;
+
+  $rootScope.$watch('user',function(){
+
+        db = firebase.database().ref($rootScope.user.uid);
+        darkzones = db.child('darkzones');
+        lumens    = db.child('lumens');
+
+  })
 
 
-  var db = firebase.database().ref($rootScope.user.uid);
-  var darkzones = db.child('darkzones');
-  var lumens    = db.child('lumens');
 
   var dzO = $firebaseObject(darkzones);
 

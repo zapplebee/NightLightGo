@@ -96,10 +96,7 @@ var captured = [];
 
 $scope.test = function(e){
 
-
-  console.log(Math.floor(e.layerX * .025), Math.floor(e.layerY * .025));
   var x = _.find(processedSensorPixels, function(o) { return o.x == Math.floor(e.layerX * .025) && o.y == Math.floor(e.layerY * .025) });
-  console.log(x);
   if(x){
     x.animation = 0;
     captured.push(x);

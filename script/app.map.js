@@ -57,8 +57,6 @@ s = function(){
 
 
 
-  console.log(innerPath);
-
   //$scope.dz.push({time: Date.now(), location:$rootScope.location});
 }
 
