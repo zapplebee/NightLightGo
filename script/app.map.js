@@ -67,12 +67,10 @@ $scope.$watch('dz',s);
 
 
 
-$rootScope.$watch('user',function(){
-       var obj = $firebaseObject(ref);
+
+
+     var obj = $firebaseObject(ref);
   obj.$bindTo($scope, "data");
-})
-
-
 
 
 
