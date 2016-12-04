@@ -119,7 +119,7 @@ scope.darkness = function(){
           $rootScope.location = position.coords.latitude + "," + position.coords.longitude;
           $rootScope.coords = position.coords
         });
-      }, 1000);
+      }, 250);
     } else {
       $rootScope.errors.geo = true;
     }
