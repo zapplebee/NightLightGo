@@ -252,7 +252,31 @@ var ref = firebase.database().ref(Zuid);
 
 
 
+app.directive('fullscreen',function(){
+  return {
+    restrict : "C",
+    link : function (scope,element){
+      element.bind('click',function(e){
 
+        var el = document.body;
+
+    if (el.requestFullscreen) { // W3C API
+        el.requestFullscreen();
+    } else if (el.mozRequestFullScreen) { // Mozilla current API
+        el.mozRequestFullScreen();
+    } else if (el.webkitRequestFullScreen) { // Webkit current API
+        el.webkitRequestFullScreen();
+    } // Maybe other prefixed APIs?
+
+
+
+      }
+
+
+      )
+    }
+  }
+})
 
 
 
