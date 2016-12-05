@@ -14,6 +14,10 @@ body,html,.main {
   overflow: hidden;
 }
 
+body {
+  background-color: white;
+}
+
 .main-nav {
   background-color: rgb(203,203,203);
   position: fixed;
@@ -168,11 +172,28 @@ body,html,.main {
 
   padding: 10vmin;
   padding-top: 15vh;
-  font-size: 1em;
+  font-size: 2vh;
   line-height: 2em;
 }
 
 .directions p {
   line-height: 1.5em;
   margin-top: 2em;
+}
+
+.softboys {
+  position:absolute;
+  width:100%;
+  bottom: 0;
+  left:0;
+}
+
+.remaininglumens {
+  position:absolute;
+  bottom: 0;
+  background-color:rgba(255,255,255,.6);
+  color: black;
+  width: 100%;
+  padding: 1em;
+  text-align: center;
 }

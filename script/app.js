@@ -65,8 +65,8 @@ document.addEventListener('touchmove', function(e){e.preventDefault()}, false);
       .when('/cam', {
         templateUrl: '/templates/cam.html',
         controller: 'camCtrl'
-      }).when('/g', {
-        template: '<button ng-click="g()">g</button>',
+      }).when('/house', {
+        template: '<img class="softboys" src="{{src()}}"><label class="remaininglumens">Remaining Lumens: {{lumens}}</label>',
         controller: 'gCtrl'
       })
       // route for the about page
@@ -86,7 +86,7 @@ document.addEventListener('touchmove', function(e){e.preventDefault()}, false);
   });
 
 
-app.directive('mainNav', function($location,$rootScope) {
+app.directive('mainNav', function($location,db) {
   return {
     restrict: 'C',
     transclude: true,
@@ -96,7 +96,7 @@ app.directive('mainNav', function($location,$rootScope) {
 }
 
 scope.darkness = function(){
-  return $rootScope.inDark ? "disabled" : "";
+  return db.inDark() ? "disabled" : "";
 }
 
     },
@@ -107,7 +107,7 @@ scope.darkness = function(){
 
 
 
-  app.run(function($rootScope, $location,$interval) {
+  app.run(function($rootScope, $location,$interval,db) {
 
 
 
@@ -115,13 +115,24 @@ scope.darkness = function(){
     $rootScope.errors = {};
 
 
+    $rootScope.user = userGlobal;
+    if($rootScope.user && $rootScope.user.uid){
+      db.init($rootScope.user.uid);  
+    }
+    
+  })
+
+
+
+app.service("db",function($rootScope,$firebaseAuth,$firebaseObject,$firebaseArray,$q,$interval){
+
+  var $scope = $rootScope.$new();
 
     if ("geolocation" in navigator) {
       $interval(function(){
         navigator.geolocation.getCurrentPosition(function(position) {
-          //console.log(position.coords.latitude, position.coords.longitude);
-          $rootScope.location = position.coords.latitude + "," + position.coords.longitude;
-          $rootScope.coords = position.coords
+          $scope.location = position.coords.latitude + "," + position.coords.longitude;
+          $scope.coords = position.coords
         });
       }, 250);
     } else {
@@ -129,100 +140,111 @@ scope.darkness = function(){
     }
 
 
-    $rootScope.user = userGlobal;
 
 
-  })
+    var Zuid = "";
 
+  $scope.init = function(uid){
+      Zuid = uid;
+      $firebaseObject(firebase.database().ref(uid).child('darkzones')).$bindTo($scope, "darkzones");
+      $firebaseObject(firebase.database().ref(uid).child('lumens')).$bindTo($scope, "lumens");
+    }
+  // drunk ass antipattern
 
+  var getDarkZones = function(){return _.isUndefined($scope.darkzones) ? false : $scope.darkzones }
+  var getCoords =  function(){return _.isUndefined($scope.coords) ? false : $scope.coords};
+  var s = {
+    init: $scope.init,
+    getDarkZones: getDarkZones,
+    inDark : function(){
+      var darkzones = getDarkZones();
+      var coords    = getCoords();
+      if(darkzones && coords){
+        var inDark = false;
+        _.each(darkzones,function(e,i,dz){
+          if(!_.startsWith(i,"$")){
 
-app.service("db",function($rootScope,$firebaseAuth,$firebaseObject,$firebaseArray,$q,$interval){
-
-  //set new dark zone
-
-  //https://github.com/firebase/angularfire/blob/master/docs/reference.md#bindtoscope-varname
-
-
-  //$rootScope.user = $rootScope.user || {uid:""};
-
-
-  $rootScope.$watch('coords',function(coords){
-    var inDark = false;
-      _.each(dzO,function(e,i,dz){
-        if(!_.startsWith(i,"$")){
-
-          if(0.000125 >= Math.abs(e.latitude - coords.latitude) && 0.000125 >= Math.abs(e.longitude - coords.longitude)){
-            inDark = true;
+            if(0.000125 >= Math.abs(e.latitude - coords.latitude) && 0.000125 >= Math.abs(e.longitude - coords.longitude)){
+              inDark = true;
+            }
           }
+        })
+        return inDark;
+      } else {
+        return false;
+      }
 
 
 
-        }
-      })
+
+
 
       $rootScope.inDark = inDark;
-  })
 
 
 
 
-  var db = firebase.database().ref($rootScope.user.uid);
-  var darkzones = db.child('darkzones');
-  var lumens    = db.child('lumens');
 
-  var dzO = $firebaseObject(darkzones);
-
-
-
-  var s = {
-    getDB: function(){return db},
-    setDark : function(){
-
-      db.child('lumens').once('value',function(snapshot){
+    },
+    getLumens: function(){return _.isUndefined($scope.lumens) ? false : $scope.lumens.$value },
+    getCoords : getCoords,
+    getLocation: function(){return _.isUndefined($scope.coords) ? '0,0': $scope.coords.latitude + "," + $scope.coords.longitude;},
+    lumensCaught : function(){
+      var ref = firebase.database().ref(Zuid);
+      ref.child('darkzones').push({time: Date.now(), longitude:$scope.coords.longitude, latitude:$scope.coords.latitude});
+      ref.child('lumens').once('value',function(snapshot){
         var previous = snapshot.val() || 0;
-        db.child('lumens').set(previous + 10);
+        ref.child('lumens').set(parseInt(previous) + 10);
       });
-
-      db.child('darkzones').push({time: Date.now(), longitude:$rootScope.coords.longitude, latitude:$rootScope.coords.latitude});
     },
-
-    deleteDark : function(key){
-      $firebaseObject(db.child('darkzones/'+key)).$remove();
-    },
-
-    darkZones : function(){
-      return dzO;
+    _bind : function(scope,funcToBind,key){
+        scope.$watch(function() { return funcToBind(); },function(fresh){
+          scope[key] = fresh;
+        })
     }
 
   }
 
 
+
+
+
   $interval(function(){
-    //console.log('yaaaas');
+
+if(Zuid !== ""){
+
+var ref = firebase.database().ref(Zuid);
+ var dzO = s.getDarkZones();
+
+    console.log('yaaaas');
     _.each(dzO,function(e,i,collection){
       if(!_.startsWith(i, '$')){
-        if(Math.abs(e.time - Date.now()) > 1800000){
-          //if darknesses are over half hour old, delete them.
-          s.deleteDark(i);
+        if(Math.abs(e.time - Date.now()) > (1000 * 60 * 10 /* ten minutes*/)){
+          $firebaseObject(ref.child('darkzones/'+i)).$remove();
         }
       }
       
     })
+}
 
-  },20000) //every 20 seconds
+  },1000)
+
 
 
   $interval(function(){
-    db.child('lumens').once('value',function(snapshot){
+    if(Zuid !== ""){
+      var ref = firebase.database().ref(Zuid);
+    ref.child('lumens').once('value',function(snapshot){
     var previous = snapshot.val() || 0;
     if(previous !== 0){
-      console.log('losing lumens');
-      db.child('lumens').set(Math.max(0,previous - 1));
+      ref.child('lumens').set(Math.max(0,parseInt(previous) - 1));
     }
     
     });
-  },(20000 * 3))
-  //return firebase.database().ref($rootScope.user.uid);
+  }
+  },(1000 * 20))
+
+
 
   return s;
 
@@ -233,3 +255,25 @@ app.service("db",function($rootScope,$firebaseAuth,$firebaseObject,$firebaseArra
 
 
 
+app.controller("gCtrl", function($scope,db) {
+
+  db._bind($scope,db.getLumens,'lumens');
+
+
+
+  $scope.src = function(){
+    var lumens = db.getLumens();
+
+    if (lumens == 0){
+      return '/nolumens.gif';
+    }
+
+    if (lumens < 50){
+      return '/halflumens.gif'
+    }
+
+    return '/fulllumens.gif'
+    
+  }
+
+});

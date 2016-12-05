@@ -4,8 +4,12 @@ var s;
 app.controller("mapCtrl", function($scope,$rootScope,NgMap,$firebaseObject,db,$interval) {
 
 
-db.darkZones().$bindTo($scope, "dz");
+db._bind($scope,db.getDarkZones,"dz");
+db._bind($scope,db.getLocation,"location");
 
+$scope.$watch('location',function(fresh){
+  console.log(fresh);
+})
 
 function generateDark(coords){
 
@@ -21,17 +25,6 @@ function generateDark(coords){
 
 
 
-var ref =  db.getDB();// assume value here is { foo: "bar" }
-
-//db.setDark();
-
-$scope.update = function(){
-  console.log($scope.data);
-
-  $scope.data = {tet:6677};
-
-}
-
 $scope.paths = [];
 
 
@@ -46,7 +39,6 @@ s = function(){
   var innerPath = []
   _.each($scope.dz,function(e,i,dz){
     if(!_.startsWith(i,"$")){
-      console.log(i);
       innerPath.push(generateDark(e));
 
     }
@@ -66,28 +58,10 @@ $scope.$watch('dz',s);
 
 
 
-
-
-
-     var obj = $firebaseObject(ref);
-  obj.$bindTo($scope, "data");
-
-
-
 $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdvNmILqyuwwFyp3J6_toanaOLoFbX1i4";
 
   NgMap.getMap().then(function(map) {
     google.maps.event.trigger(map, 'resize')
   });
 
-});
-app.controller("gCtrl", function($scope,$rootScope) {
-
-    console.log($rootScope.user);
-    $scope.g = function(){
-    firebase.database().ref('users/' + $rootScope.user.uid).set({
-    childname: 'pz',
-    light: 100
-  }).then(function(){console.log('good',arguments)}).catch(function(){console.log(arguments)});
-}
 });
