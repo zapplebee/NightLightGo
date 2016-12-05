@@ -193,3 +193,14 @@ body,html,.main {
   padding: 1em;
   text-align: center;
 }
+
+.fullscreen {
+  display:block;
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  background-color: transparent;
+  background-image:url('/fullscreen.png');
+  bottom: 5px;
+  right: 5px;
+}
