@@ -242,7 +242,7 @@ var ref = firebase.database().ref(Zuid);
     
     });
   }
-  },(1000 * 60))
+  },(1000 * 20))
 
 
 
